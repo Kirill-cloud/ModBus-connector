@@ -22,16 +22,11 @@ namespace ModBus_connector
     /// </summary>
     public partial class MainWindow : Window
     {
-        private byte[] tcpSynClBuffer = new byte[2048];
-
         public MainWindow()
         {
             InitializeComponent();
-            ConnectionService connectionService = new();
-            var x = connectionService.Connect("127.0.0.1",502);
-            x.Send(new byte[12]{ 0,2,0,0,0,6,1,2,0,0,0,1}, 0, 12, SocketFlags.None);
-            int result = x.Receive(tcpSynClBuffer, 0, tcpSynClBuffer.Length, SocketFlags.None);
-
+            ModBusConnector connector = new(new ConnectionService());
+            var needToShow = connector.GetValue(); // выведи на экран, вызвать при кнопке обновить
         }
     }
 }
