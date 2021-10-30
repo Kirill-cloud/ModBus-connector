@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Button Content="Refresh" Name="refresher" Width="120" Height="60"/>
-            <Label Name="condition" Content="unknown"/>
+        <StackPanel VerticalAlignment="Center">
+            <Button Content="Refresh" Name="refresher" Width="120" Height="60" Click="refresher_Click"/>
+            <Label Name="condition" Content="Click refresh!" HorizontalContentAlignment="Center" Width="120" Height="30"/>
         </StackPanel>
         
 

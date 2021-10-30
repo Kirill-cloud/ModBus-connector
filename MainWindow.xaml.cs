@@ -22,11 +22,16 @@ namespace ModBus_connector
     /// </summary>
     public partial class MainWindow : Window
     {
+        ModBusConnector connector = new(new ConnectionService());
+
         public MainWindow()
         {
             InitializeComponent();
-            ModBusConnector connector = new(new ConnectionService());
-            var needToShow = connector.GetValue(); // выведи на экран, вызвать при кнопке обновить
+        }
+
+        private void refresher_Click(object sender, RoutedEventArgs e)
+        {
+            condition.Content = connector.GetValue();
         }
     }
 }
