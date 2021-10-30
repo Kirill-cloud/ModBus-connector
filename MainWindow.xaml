@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <StackPanel>
+            <Button Content="Refresh" Name="refresher" Width="120" Height="60"/>
+            <Label Name="condition" Content="unknown"/>
+        </StackPanel>
+        
 
     </Grid>
 </Window>
