@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModBus_connector.Services
 {
-    class ConnectionService
+    class ConnectionService : IConnectionService
     {
         private int _timeout=500;
 
