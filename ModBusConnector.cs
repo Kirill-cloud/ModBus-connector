@@ -11,7 +11,9 @@ namespace ModBus_connector
     public class ModBusConnector
     {
         private IConnectionService connectionService;
-        private byte[] readInputsCommand = new byte[12] { 0, 2, 0, 0, 0, 6, 1, 2, 0, 0, 0, 1 };
+
+        ModBusPackage readDiscretInputs = new(new byte[12] { 0, 0, 0, 0, 0, 6, 1, 2, 0, 0, 0, 1 });
+
         private byte[] tcpSynClBuffer = new byte[2048];
 
         private string ip = "127.0.0.1";
@@ -20,14 +22,14 @@ namespace ModBus_connector
             get { return ip; }
             set { ip = value; }
         }
-        
+
         private int port = 502;
         public int Port
         {
             get { return port; }
             set { port = value; }
         }
-        
+
         public ModBusConnector(IConnectionService connectionService)
         {
             this.connectionService = connectionService;
@@ -35,10 +37,12 @@ namespace ModBus_connector
 
         public bool GetValue()
         {
+            readDiscretInputs.PDU = new(0, 9);
+
             var socket = connectionService.Connect(Ip, Port);
-            socket.Send(readInputsCommand, 0, readInputsCommand.Length, SocketFlags.None);
+            socket.Send(readDiscretInputs.GetPackage(), 0, readDiscretInputs.GetPackage().Length, SocketFlags.None);
             int result = socket.Receive(tcpSynClBuffer, 0, tcpSynClBuffer.Length, SocketFlags.None);
-            
+
             var data = new byte[tcpSynClBuffer[8]];
             Array.Copy(tcpSynClBuffer, 9, data, 0, tcpSynClBuffer[8]);
             return Convert.ToBoolean(data[0]);
